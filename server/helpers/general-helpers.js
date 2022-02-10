@@ -12,4 +12,7 @@ module.exports = {
       throw new AppError(err);
     }
   },
+  async compare(password, hash) {
+    return await bcrypt.compare(password, hash);
+  },
 };
