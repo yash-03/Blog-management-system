@@ -1,4 +1,5 @@
 const userModel = require("../models/users");
+const AppError = require("../utils/appError");
 const helper = require("../helpers/general-helpers");
 
 const UserControls = {
@@ -11,8 +12,8 @@ const UserControls = {
       const user = new userModel(userData);
       return await user.save();
     } catch (err) {
-      console.log(`User Register Error: ${err.message}`);
-      throw new Error(err);
+      console.log(`User Register Error: ${err}`);
+      throw new AppError(err);
     }
   },
 };

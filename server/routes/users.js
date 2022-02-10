@@ -9,9 +9,9 @@ router
   .post("/register", async (req, res) => {
     try {
       const userResult = await users.registerUser(req.body);
-      res.send({ token: "dummyToken", user: userResult });
+      res.send({ token: "dummyToken", status: "success", user: userResult });
     } catch (err) {
-      res.send(err);
+      res.send({ status: "fail", error: err });
     }
   })
   .post("/authuser", (req, res) => {
