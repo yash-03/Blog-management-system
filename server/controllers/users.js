@@ -1,10 +1,12 @@
 const userModel = require("../models/users");
 const helper = require("../helpers/general-helpers");
+const { generateToken } = require("../helpers/general-helpers");
+const AppError = require("../utils/appError");
 
 const UserControls = {
   async register(req, res) {
     try {
-      const { password } = req.body;
+      const { password, email } = req.body;
       const hash = await helper.encrypt(password);
       const userRecord = {
         ...req.body,
@@ -13,7 +15,9 @@ const UserControls = {
       const user = new userModel(userRecord);
       const newUser = await user.save();
 
-      res.send({ token: "dummyToken", status: "success", user: newUser });
+      const token = await generateToken(email);
+
+      res.send({ token, status: "success", user: newUser });
     } catch (err) {
       console.log(`User Register Error: ${err}`);
       res.send({ status: "fail", error: err });
@@ -36,7 +40,9 @@ const UserControls = {
             },
           });
         }
-        res.send({ token: "dummy token", status: "success", user });
+
+        const token = await generateToken(username);
+        res.send({ token, status: "success", user });
       } else {
         res.send({
           status: "fail",
@@ -47,8 +53,11 @@ const UserControls = {
       }
     } catch (err) {
       console.log(`User login error: ${err}`);
-      res.send({ status: "fail", error: err });
+      res.send({ status: "fail", error: err.message });
     }
+  },
+  async authUser(req, res) {
+    res.send(req.user);
   },
 };
 

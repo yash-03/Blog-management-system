@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { register, login } = require("../controllers/users");
+const { register, login, authUser } = require("../controllers/users");
+const { verifyToken } = require("../middleware/auth");
 
 router
-  .post("/login", (req, res) => login(req, res))
-  .post("/register", (req, res) => register(req, res))
-  .post("/authuser", (req, res) => {
-    res.send("auth user");
-  });
+  .post("/login", login)
+  .post("/register", register)
+  .post("/authuser", verifyToken, authUser);
 
 module.exports = router;
