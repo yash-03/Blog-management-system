@@ -19,6 +19,6 @@ const blogSchema = new Schema(
   { versionKey: false }
 );
 
-const blogModel = model("Users", blogSchema);
+const blogModel = model("Blogs", blogSchema);
 
 module.exports = blogModel;
