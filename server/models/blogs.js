@@ -4,15 +4,18 @@ const { Schema, model } = mongoose;
 
 const blogSchema = new Schema(
   {
-    title: String,
-    description: String,
-    comments: [{ body: String, date: Date }],
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    images: [{ file: String, caption: String }],
     meta: {
-      votes: Number,
-      favs: Number,
+      votes: { count: Number, user: String },
+      favs: { count: Number, user: String },
+      likes: { count: Number, user: String },
+      dislikes: { count: Number, user: String },
     },
+    comments: [{ user: String, body: String, date: Date }],
     active: { type: Boolean, default: true },
-    createdBy: String,
+    createdBy: { type: String, required: true },
     createdAt: { type: Date, default: new Date() },
     updatedAt: { type: Date, default: new Date() },
   },
