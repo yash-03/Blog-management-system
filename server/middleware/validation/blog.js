@@ -8,12 +8,15 @@ const validation = {
     if (!description) {
       message.push("description is required!");
     }
-    res.send({
-      status: "fail",
-      errors: {
-        message,
-      },
-    });
+    if (message?.length > 0) {
+      res.send({
+        status: "fail",
+        errors: {
+          message,
+        },
+      });
+    }
+    next();
   },
 };
 
