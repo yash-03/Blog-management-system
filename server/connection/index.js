@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const options = [];
 
-mongoose.connect("mongodb://127.0.0.1:27017/blog", options).then(
+mongoose.connect(process.env.MONGO_URL, options).then(
   () => {
     console.log("MongoDB connect!");
   },
